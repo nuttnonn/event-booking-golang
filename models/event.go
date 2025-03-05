@@ -30,6 +30,7 @@ func (e Event) Save() error {
 	if err != nil {
 		return err
 	}
+
 	id, err := result.LastInsertId()
 	e.ID = id
 	return err
@@ -43,7 +44,7 @@ func GetAllEvents() ([]Event, error) {
 	}
 	defer rows.Close()
 
-	var events []Event
+	var events = []Event{}
 
 	for rows.Next() {
 		var event Event
