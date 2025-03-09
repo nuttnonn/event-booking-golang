@@ -3,6 +3,7 @@ package routes
 import (
 	"event-booking-golang/models"
 	"event-booking-golang/utils"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -47,4 +48,13 @@ func login(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusOK, gin.H{"message": "Login successful!", "token": token})
+}
+
+func getUsers(context *gin.Context) {
+	users, err := models.GetAllUsers()
+	if err != nil {
+		fmt.Println(err)
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not fetch users. Try again later."})
+	}
+	context.JSON(http.StatusOK, users)
 }
